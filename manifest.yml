@@ -1,26 +1,26 @@
 ---
 declared-services:
-  wbc-conversation-service:
+  bbdemo-conversation:
     label: conversation
     plan: free
-  wbc-discovery-service:
+  bbdemo-discovery:
     label: discovery
     plan: lite
-  wbc-natural-language-understanding-service:
+  bbdemo-nlu:
     label: natural-language-understanding
     plan: free
-  wbc-tone-analyzer-service:
+  bbdemo-tone:
     label: tone_analyzer
     plan: lite
 applications:
 - path: .
   memory: 256M
   instances: 1
-  name: watson-banking-chatbot
+  name: bbdemo-banking-chatbot
   disk_quota: 256M
   random-route: false
   services:
-  - wbc-conversation-service
-  - wbc-tone-analyzer-service
-  - wbc-natural-language-understanding-service
-  - wbc-discovery-service
+  - bbdemo-conversation
+  - bbdemo-tone
+  - bbdemo-nlu
+  - bbdemo-discovery
