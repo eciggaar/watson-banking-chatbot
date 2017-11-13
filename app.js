@@ -188,7 +188,9 @@ app.post('/api/message', function(req, res) {
 
       payload.context.person = person;
     })
-  } else if (!payload.context.first_name) {
+  }
+
+  if (!payload.context.first_name && first_name != "") {
     console.log('Setting first_name in context...');
     payload.context.first_name = first_name;
   }
