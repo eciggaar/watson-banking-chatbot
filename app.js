@@ -161,6 +161,7 @@ app.post('/api/message', function(req, res) {
   payload.workspace_id = workspaceID;
   payload.input = {};
   payload.context = {};
+  first_name = "";
 
   // Add request JSON body as input to payload
   if (req.body) {
