@@ -511,13 +511,13 @@ app.post('/api/message', function(req, res) {
               branchText =
                 'Here are the branch details at ' +
                 branchMaster.location +
-                ' <br/>Address: ' +
+                ' \nAddress: ' +
                 branchMaster.address +
-                '<br/>Phone: ' +
+                '\nPhone: ' +
                 branchMaster.phone +
-                '<br/>Operation Hours: ' +
+                '\nOperation Hours: ' +
                 branchMaster.hours +
-                '<br/>';
+                '\n';
             } else {
               branchText = "Sorry currently we don't have branch details for " + data.context.action.Location;
             }
