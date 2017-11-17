@@ -517,7 +517,7 @@ app.post('/api/message', function(req, res) {
                 branchMaster.phone +
                 '\nOperation Hours: ' +
                 branchMaster.hours +
-                '\n';
+                '.';
             } else {
               branchText = "Sorry currently we don't have branch details for " + data.context.action.Location;
             }
@@ -543,7 +543,7 @@ app.post('/api/message', function(req, res) {
             console.log('append lookup results to the output.');
             // append accounts list text to response array
             if (data.output.text) {
-              data.output.text.push(branchText);
+              data.output.text[0] = branchText;
             }
             // clear the context's action since the lookup and append was completed.
             data.context.action = {};
