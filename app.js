@@ -509,8 +509,6 @@ app.post('/api/message', function(req, res) {
           if (appendBranchResponse === true) {
             if (branchMaster != null) {
               branchText =
-                'Here are the branch details at ' +
-                branchMaster.location +
                 ' \nAddress: ' +
                 branchMaster.address +
                 '\nPhone: ' +
@@ -543,11 +541,10 @@ app.post('/api/message', function(req, res) {
             console.log('append lookup results to the output.');
             // append accounts list text to response array
             if (data.output.text) {
-              data.output.text[0] = branchText;
+              data.output.text.push(branchText);
             }
             // clear the context's action since the lookup and append was completed.
             data.context.action = {};
-
             callback(null, data);
           }
         });
