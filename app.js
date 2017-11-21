@@ -508,14 +508,7 @@ app.post('/api/message', function(req, res) {
 
           if (appendBranchResponse === true) {
             if (branchMaster != null) {
-              branchText =
-                ' \nAddress: ' +
-                branchMaster.address +
-                '\nPhone: ' +
-                branchMaster.phone +
-                '\nOperation Hours: ' +
-                branchMaster.hours +
-                '.';
+              branchText = '<br>Address: ' + branchMaster.address + '<br>Phone: ' + branchMaster.phone + '<br>Operation Hours: ' + branchMaster.hours + '.';
             } else {
               branchText = "Sorry currently we don't have branch details for " + data.context.action.Location;
             }
