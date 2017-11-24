@@ -66,7 +66,6 @@ let setupError = '';
 
 // Credentials for services
 const conversationCredentials = vcapServices.getCredentials('conversation');
-const nluCredentials = vcapServices.getCredentials('natural-language-understanding');
 const toneAnalyzerCredentials = vcapServices.getCredentials('tone_analyzer');
 const discoveryCredentials = vcapServices.getCredentials('discovery');
 
@@ -122,14 +121,6 @@ const toneAnalyzer = watson.tone_analyzer({
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
   version: 'v3',
   version_date: '2016-05-19'
-});
-
-/* ******** NLU ************ */
-const NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
-const nlu = new NaturalLanguageUnderstandingV1({
-  username: nluCredentials.username,
-  password: nluCredentials.password,
-  version_date: '2017-02-27'
 });
 
 const payload = {
@@ -262,52 +253,20 @@ app.post('/api/message', function(req, res) {
           }
         };
 
-        nlu.analyze(parameters, function(err, response) {
+        conversation.message(payload, function(err, data) {
           if (err) {
-            console.log('WARN:', err.error);
+            console.log('ERR: ' + err);
           } else {
-            const nluOutput = response;
-
-            payload.context['nlu_output'] = nluOutput;
-            // console.log('NLU = ', nlu_output);
-            // identify location
-            const entities = nluOutput.entities;
-
-            let location = entities.map(function(entry) {
-              if (entry.type == 'Location') {
-                return entry.text;
+            console.log('conversation.message :: ', JSON.stringify(data));
+            // lookup actions
+            checkForLookupRequests(data, function(err, data) {
+              if (err) {
+                return res.status(err.code || 500).json(err);
+              } else {
+                return res.json(data);
               }
             });
-
-            location = location.filter(function(entry) {
-              if (entry != null) {
-                return entry;
-              }
-            });
-
-            if (location.length > 0) {
-              payload.context['Location'] = location[0];
-              console.log('Location = ', payload.context['Location']);
-            } else {
-              payload.context['Location'] = '';
-            }
           }
-
-          conversation.message(payload, function(err, data) {
-            if (err) {
-              console.log('ERR: ' + err);
-            } else {
-              console.log('conversation.message :: ', JSON.stringify(data));
-              // lookup actions
-              checkForLookupRequests(data, function(err, data) {
-                if (err) {
-                  return res.status(err.code || 500).json(err);
-                } else {
-                  return res.json(data);
-                }
-              });
-            }
-          });
         });
       }
     });
@@ -497,20 +456,20 @@ app.post('/api/message', function(req, res) {
         const loc = data.context.action.Location.toLowerCase();
         bankingServices.getBranchInfo(loc, function(err, branchMaster) {
           if (err) {
-            console.log('Error while calling bankingServices.getAccountInfo ', err);
+            console.log('Error while calling bankingServices.getBranchInfo() ', err);
             callback(err, null);
             return;
           }
 
           const appendBranchResponse = data.context.action.append_response && data.context.action.append_response === true ? true : false;
 
-          let branchText = '';
+          let branchText = [];
 
           if (appendBranchResponse === true) {
             if (branchMaster != null) {
-              branchText = 'Address: ' + branchMaster.address + '<br>Phone: ' + branchMaster.phone + '<br>Operation Hours: ' + branchMaster.hours + '.';
+              branchText = ["Here are the address details for our branch in " + data.context.action.Location + ".", "Address: " + branchMaster.address + "<br>Phone: " + branchMaster.phone + "<br>Operation Hours: " + branchMaster.hours + "."];
             } else {
-              branchText = "Sorry currently we don't have branch details for " + data.context.action.Location;
+              branchText = ["Sorry, currently we don't have branch details for " + data.context.action.Location + '. Please enter another location.'];
             }
           }
 
@@ -534,7 +493,7 @@ app.post('/api/message', function(req, res) {
             console.log('append lookup results to the output.');
             // append accounts list text to response array
             if (data.output.text) {
-              data.output.text.push(branchText);
+              data.output.text.push.apply(data.output.text, branchText);
             }
             // clear the context's action since the lookup and append was completed.
             data.context.action = {};
