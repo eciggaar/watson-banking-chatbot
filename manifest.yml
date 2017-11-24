@@ -6,9 +6,6 @@ declared-services:
   bbdemo-discovery:
     label: discovery
     plan: lite
-  bbdemo-nlu:
-    label: natural-language-understanding
-    plan: free
   bbdemo-tone:
     label: tone_analyzer
     plan: lite
@@ -22,5 +19,4 @@ applications:
   services:
   - bbdemo-conversation
   - bbdemo-tone
-  - bbdemo-nlu
   - bbdemo-discovery
