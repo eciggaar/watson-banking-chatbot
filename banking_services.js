@@ -268,34 +268,52 @@ const bankingServices = {
       hours: '10AM–4PM'
     },
     {
-      location: 'cochin',
-      address: 'Cochin Shipyard, Mahatma Gandhi Rd, Ernakulam, Kerala 682015',
-      phone: '0484 0000 0000',
-      hours: '10AM–4PM'
+      location: 'ams',
+      address: 'Dam 16, 1012 NP, Amsterdam',
+      phone: '+31 20 777 8899',
+      hours: '9AM–5PM'
     },
     {
-      location: 'andheri',
-      address: 'Swami Vivekanand Road, Andheri West, Mumbai, Maharashtra 400058',
-      phone: '022 0000 0000',
-      hours: '10AM–5PM'
+      location: 'amsterdam',
+      address: 'Dam 16, 1012 NP, Amsterdam',
+      phone: '+31 20 777 8899',
+      hours: '9AM–5PM'
     },
     {
-      location: 'delhi',
-      address: 'Rohini, Delhi, 110042',
-      phone: '011 0000 0000',
-      hours: '10AM–5PM'
+      location: 'adam',
+      address: 'Dam 16, 1012 NP, Amsterdam',
+      phone: '+31 20 777 8899',
+      hours: '9AM–5PM'
     },
     {
-      location: 'bangalore',
-      address: 'Bangalore Airport Exit Road, Bengaluru, Karnataka 560017',
-      phone: '080 0000 0000',
-      hours: '10AM–5PM'
+      location: '020',
+      address: 'Dam 16, 1012 NP, Amsterdam',
+      phone: '+31 20 777 8899',
+      hours: '9AM–5PM'
     },
     {
-      location: 'mumbai',
-      address: 'Nariman point, Mumbai, Maharashtra 400023',
-      phone: '022 1111 1111',
-      hours: '10AM–5PM'
+      location: 'utrecht',
+      address: 'Croeselaan 18, 3500 HG, Utrecht',
+      phone: '+31 30 216 0000',
+      hours: '6AM–9PM'
+    },
+    {
+      location: 'rotterdam',
+      address: 'Blaak 333, 3011 GB, Rotterdam',
+      phone: '+31 10 400 3333',
+      hours: '9AM–5PM'
+    },
+    {
+      location: 'rdam',
+      address: 'Blaak 333, 3011 GB, Rotterdam',
+      phone: '+31 10 400 3333',
+      hours: '9AM–5PM'
+    },
+    {
+      location: '010',
+      address: 'Blaak 333, 3011 GB, Rotterdam',
+      phone: '+31 10 400 3333',
+      hours: '9AM–5PM'
     }
   ],
   getBranchInfo: function(location, callback) {
